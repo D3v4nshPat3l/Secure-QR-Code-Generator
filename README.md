@@ -218,7 +218,7 @@ run.bat --self-test
 Generate a phone QR:
 
 ```bat
-run.bat --type phone --phone 9754485390 --filename phone_qr --yes
+run.bat --type phone --phone 9638478733 --filename phone_qr --yes
 ```
 
 ---
@@ -253,7 +253,7 @@ Run a self-test:
 Generate a phone QR:
 
 ```bash
-./run.sh --type phone --phone 9754485390 --filename phone_qr --yes
+./run.sh --type phone --phone 9638478733 --filename phone_qr --yes
 ```
 
 ---
@@ -330,19 +330,19 @@ python secure_qr_generator.py --type url --url github.com --filename github_qr -
 ### Phone Call QR
 
 ```bash
-python secure_qr_generator.py --type phone --phone 9754485390 --filename phone_qr --yes
+python secure_qr_generator.py --type phone --phone 9638478733 --filename phone_qr --yes
 ```
 
 Generated payload:
 
 ```text
-tel:9754485390
+tel:9638478733
 ```
 
 ### SMS QR
 
 ```bash
-python secure_qr_generator.py --type sms --phone 9754485390 --message "Hello from QR" --filename sms_qr --yes
+python secure_qr_generator.py --type sms --phone 9638478733 --message "Hello from QR" --filename sms_qr --yes
 ```
 
 ### Email QR
@@ -354,7 +354,7 @@ python secure_qr_generator.py --type email --email test@example.com --subject "H
 ### WhatsApp QR
 
 ```bash
-python secure_qr_generator.py --type whatsapp --phone 919754485390 --message "Hello from QR" --filename whatsapp_qr --yes
+python secure_qr_generator.py --type whatsapp --phone 919638478733 --message "Hello from QR" --filename whatsapp_qr --yes
 ```
 
 ### Wi-Fi QR
@@ -393,10 +393,10 @@ Generated PNG files are ignored by Git using `.gitignore`, so your repository st
 
 ```text
 Input:
-9754485390
+9638478733
 
 Payload:
-tel:9754485390
+tel:9638478733
 
 Output:
 output/phone_qr.png
