@@ -378,7 +378,7 @@ def print_menu() -> None:
         """
 =================================
  Secure QR Code Generator
- Linux/Kali Compatible
+ Windows / Linux / Kali Compatible
 =================================
 
 1. Safe Text QR
@@ -488,7 +488,7 @@ def run_self_test() -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Secure Linux/Kali-compatible QR Code Generator"
+        description="Secure Windows/Linux/Kali-compatible QR Code Generator"
     )
 
     parser.add_argument(
