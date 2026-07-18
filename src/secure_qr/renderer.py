@@ -72,8 +72,10 @@ def render_qr(
             image.save(temp_path)
             # qrcode's SVG factory uses fixed black/white styles; replace only those
             # generated attributes after validating both colors with Pillow.
-            fg = "#%02x%02x%02x" % ImageColor.getrgb(foreground)[:3]
-            bg = "#%02x%02x%02x" % ImageColor.getrgb(background)[:3]
+            fg_rgb = ImageColor.getrgb(foreground)[:3]
+            bg_rgb = ImageColor.getrgb(background)[:3]
+            fg = f"#{fg_rgb[0]:02x}{fg_rgb[1]:02x}{fg_rgb[2]:02x}"
+            bg = f"#{bg_rgb[0]:02x}{bg_rgb[1]:02x}{bg_rgb[2]:02x}"
             svg = temp_path.read_text(encoding="utf-8")
             svg = svg.replace('fill="white"', f'fill="{bg}"', 1)
             svg = svg.replace('fill="#000000"', f'fill="{fg}"', 1)

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Compatibility entry point. Prefer the installed ``secure-qr`` command."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 SOURCE_DIR = Path(__file__).resolve().parent / "src"
 if SOURCE_DIR.is_dir():

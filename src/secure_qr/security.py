@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import SplitResult, urlsplit, urlunsplit
 
-from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey, Ed25519PublicKey
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
@@ -85,10 +85,10 @@ def _validate_hostname(hostname: str) -> tuple[str, str]:
         except UnicodeError as exc:
             raise SecurityError("Hostname cannot be converted to IDNA safely.") from exc
         if len(ascii_host) > 253 or "." not in ascii_host:
-            raise SecurityError("URL must contain a valid public domain.")
+            raise SecurityError("URL must contain a valid public domain.") from None
         labels = ascii_host.split(".")
         if any(not DOMAIN_LABEL_RE.fullmatch(label) for label in labels):
-            raise SecurityError("Hostname contains an invalid DNS label.")
+            raise SecurityError("Hostname contains an invalid DNS label.") from None
         return unicode_host, ascii_host
     else:
         if not ip.is_global:
