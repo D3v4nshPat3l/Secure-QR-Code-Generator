@@ -1,24 +1,21 @@
 <svg width="1100" height="360" viewBox="0 0 1100 360" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="1100" height="360" rx="24" fill="#0F172A"/>
-  <text x="50" y="58" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="800">How It Works</text>
+  <text x="50" y="58" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="800">Secure Generation Workflow</text>
   <rect x="55" y="110" width="170" height="105" rx="18" fill="#1E293B"/>
-  <text x="88" y="153" fill="#38BDF8" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">1. Select</text>
-  <text x="84" y="185" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Choose QR type</text>
-  <path d="M245 162H315" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/>
-  <path d="M300 147L318 162L300 177" stroke="#94A3B8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="88" y="153" fill="#38BDF8" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">1. Classify</text>
+  <text x="84" y="185" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Select payload type</text>
+  <path d="M245 162H315" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/><path d="M300 147L318 162L300 177" stroke="#94A3B8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
   <rect x="335" y="110" width="170" height="105" rx="18" fill="#1E293B"/>
-  <text x="368" y="153" fill="#A78BFA" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">2. Enter</text>
-  <text x="365" y="185" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Provide input</text>
-  <path d="M525 162H595" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/>
-  <path d="M580 147L598 162L580 177" stroke="#94A3B8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="368" y="153" fill="#A78BFA" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">2. Validate</text>
+  <text x="365" y="185" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Normalize and inspect</text>
+  <path d="M525 162H595" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/><path d="M580 147L598 162L580 177" stroke="#94A3B8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
   <rect x="615" y="110" width="170" height="105" rx="18" fill="#1E293B"/>
-  <text x="642" y="153" fill="#22C55E" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">3. Validate</text>
-  <text x="645" y="185" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Block unsafe data</text>
-  <path d="M805 162H875" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/>
-  <path d="M860 147L878 162L860 177" stroke="#94A3B8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="642" y="153" fill="#22C55E" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">3. Protect</text>
+  <text x="645" y="185" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Sign or encrypt</text>
+  <path d="M805 162H875" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/><path d="M860 147L878 162L860 177" stroke="#94A3B8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
   <rect x="895" y="110" width="170" height="105" rx="18" fill="#1E293B"/>
-  <text x="918" y="153" fill="#F97316" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">4. Generate</text>
-  <text x="932" y="185" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Save PNG QR</text>
+  <text x="918" y="153" fill="#F97316" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">4. Verify</text>
+  <text x="932" y="185" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Render and decode</text>
   <rect x="120" y="265" width="860" height="48" rx="24" fill="#020617" stroke="#334155"/>
-  <text x="170" y="296" fill="#E2E8F0" font-family="Consolas, monospace" font-size="20">Input → Validation → Payload Preview → QR Image → output/file.png</text>
+  <text x="150" y="296" fill="#E2E8F0" font-family="Consolas, monospace" font-size="19">Input → canonical payload → preview → QR → round-trip verification → secure output</text>
 </svg>

@@ -21,14 +21,14 @@
   <rect x="205" y="275" width="24" height="24" fill="#020617"/>
   <rect x="240" y="310" width="72" height="24" fill="#020617"/>
   <text x="410" y="140" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="56" font-weight="800">Secure QR Code Generator</text>
-  <text x="412" y="190" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="25" font-weight="500">Cross-platform QR generator for Windows, Linux and Kali</text>
+  <text x="412" y="190" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="25" font-weight="500">Generate • Decode • Analyze • Sign • Encrypt</text>
   <rect x="410" y="230" width="150" height="42" rx="21" fill="#16A34A"/>
-  <text x="436" y="258" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Secure</text>
+  <text x="436" y="258" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Validated</text>
   <rect x="578" y="230" width="170" height="42" rx="21" fill="#2563EB"/>
   <text x="604" y="258" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Python</text>
   <rect x="766" y="230" width="210" height="42" rx="21" fill="#DC2626"/>
-  <text x="792" y="258" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Kali Ready</text>
-  <text x="412" y="330" fill="#E2E8F0" font-family="Consolas, monospace" font-size="24">Text • URL • Phone • SMS • Email • WhatsApp • Wi-Fi • vCard • UPI</text>
+  <text x="792" y="258" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Security Toolkit</text>
+  <text x="412" y="330" fill="#E2E8F0" font-family="Consolas, monospace" font-size="22">URL • Wi-Fi • vCard • UPI • Signatures • Encryption • Risk analysis</text>
   <defs>
     <linearGradient id="gradient" x1="0" y1="0" x2="1200" y2="420" gradientUnits="userSpaceOnUse">
       <stop stop-color="#020617"/>

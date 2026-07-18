@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-if [ ! -d "venv" ]; then
-    echo "[-] Virtual environment not found."
-    echo "    Run: bash install.sh"
-    exit 1
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+if [ ! -x "venv/bin/python" ]; then
+  echo "Virtual environment not found. Run: ./install.sh" >&2
+  exit 1
 fi
-
-source venv/bin/activate
-python secure_qr_generator.py "$@"
+exec venv/bin/python -m secure_qr.cli "$@"

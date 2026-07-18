@@ -1,0 +1,40 @@
+name: Release build
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  python-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip build
+      - run: python -m build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: python-distributions
+          path: dist/*
+
+  windows-executable:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install . pyinstaller
+      - run: pyinstaller --onefile --name secure-qr secure_qr_generator.py
+      - run: dist\secure-qr.exe --help
+      - uses: actions/upload-artifact@v7
+        with:
+          name: secure-qr-windows
+          path: dist/secure-qr.exe

@@ -1,13 +1,9 @@
 @echo off
 setlocal
-
-if not exist venv (
-    echo [-] Virtual environment not found.
-    echo     Run: install.bat
-    exit /b 1
+cd /d "%~dp0"
+if not exist venv\Scripts\python.exe (
+  echo Virtual environment not found. Run: install.bat
+  exit /b 1
 )
-
-call venv\Scripts\activate.bat
-python secure_qr_generator.py %*
-
+venv\Scripts\python.exe -m secure_qr.cli %*
 endlocal

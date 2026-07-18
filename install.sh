@@ -1,46 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-echo "[+] Secure QR Code Generator Linux/Kali setup"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 
 if ! command -v python3 >/dev/null 2>&1; then
-    echo "[-] python3 is not installed."
-    echo "    Install it using: sudo apt update && sudo apt install -y python3"
-    exit 1
+  echo "python3 is required. Install Python 3.10 or newer using your operating system package manager." >&2
+  exit 1
 fi
-
-echo "[+] Python version:"
-python3 --version
-
 if ! python3 -m venv --help >/dev/null 2>&1; then
-    echo "[!] python3-venv is missing."
-    echo "[*] Trying to install python3-venv and python3-pip using apt."
-    sudo apt update
-    sudo apt install -y python3-venv python3-pip
+  echo "Python venv support is missing. Install the appropriate python3-venv package, then rerun this script." >&2
+  exit 1
 fi
 
-if [ ! -d "venv" ]; then
-    echo "[+] Creating virtual environment: venv"
-    python3 -m venv venv
-fi
-
-echo "[+] Activating virtual environment"
+python3 -m venv venv
+# shellcheck disable=SC1091
 source venv/bin/activate
-
-echo "[+] Upgrading pip"
 python -m pip install --upgrade pip
+python -m pip install -e .
+python secure_qr_generator.py --type text --text "Secure QR self-test" --filename self_test --output-dir output --overwrite --yes
 
-echo "[+] Installing Python dependencies"
-pip install -r requirements.txt
-
-echo "[+] Running self-test"
-python secure_qr_generator.py --self-test
-
-echo
-echo "[+] Setup completed successfully."
-echo "[+] Run interactive mode:"
-echo "    source venv/bin/activate"
-echo "    python secure_qr_generator.py"
-echo
-echo "[+] Run CLI phone QR example:"
-echo "    python secure_qr_generator.py --type phone --phone 9754485390 --filename phone_qr --yes"
+echo "Installation complete. Run: ./run.sh"

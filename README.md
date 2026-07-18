@@ -1,515 +1,135 @@
 # Secure QR Code Generator
 
-<p align="center">
-  <img src="assets/banner.svg" alt="Secure QR Code Generator Banner" width="100%">
-</p>
+<p align="center"><img src="assets/banner.svg" alt="Secure QR Code Generator" width="100%"></p>
 
-<p align="center">
-  <b>A secure cross-platform Python QR Code Generator for Windows, Linux, and Kali Linux.</b>
-</p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python" alt="Python">
-  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Kali-success?style=for-the-badge" alt="Platform">
-  <img src="https://img.shields.io/badge/Security-Input%20Validation-red?style=for-the-badge" alt="Security">
-  <img src="https://img.shields.io/badge/QR-Code%20Generator-black?style=for-the-badge" alt="QR Code Generator">
-</p>
+A security-focused Python QR toolkit for generating, decoding, analyzing, signing, and encrypting QR payloads on Windows, Linux, Kali Linux, and macOS.
 
----
+## What “secure” means
 
-## Overview
+The project separates four controls:
 
-**Secure QR Code Generator** is a terminal-based Python tool that generates QR codes for multiple real-world use cases while applying a security validation layer before generating the final QR image.
+- **Validation** checks payload structure and blocks deceptive or malformed input.
+- **Rendering verification** decodes the generated image and compares it with the requested payload.
+- **Signatures** provide authenticity and tamper detection through Ed25519.
+- **Encryption** provides confidentiality and integrity through AES-256-GCM with a scrypt-derived key.
 
-A normal QR generator blindly converts any input into a QR code. This project is different. It validates the selected QR type, blocks dangerous URI schemes, rejects risky URLs, checks phone numbers, validates UPI IDs, prevents unsafe filenames, and shows a payload preview before generating the QR code.
+No QR tool can guarantee that a destination remains trustworthy. Read [the threat model](docs/threat-model.md).
 
-This makes the project useful for:
+## Major protections
 
-* Cybersecurity learners
-* Python beginners
-* Kali Linux users
-* Windows users
-* GitHub portfolio projects
-* Utility scripting
-* Safe QR code generation
-
----
-
-## Supported QR Types
-
-| QR Type            | Payload Format                   | Purpose                    |
-| ------------------ | -------------------------------- | -------------------------- |
-| Safe Text QR       | Plain text                       | Store controlled text data |
-| HTTPS URL QR       | `https://example.com`            | Open safe public web URLs  |
-| Phone Call QR      | `tel:number`                     | Open phone dialer          |
-| SMS QR             | `sms:number?body=message`        | Open SMS app with message  |
-| Email QR           | `mailto:user@example.com`        | Open email composer        |
-| WhatsApp QR        | `https://wa.me/number`           | Open WhatsApp chat         |
-| Wi-Fi QR           | `WIFI:T:WPA;S:ssid;P:password;;` | Connect to Wi-Fi           |
-| Contact / vCard QR | `BEGIN:VCARD...`                 | Save contact details       |
-| UPI Payment QR     | `upi://pay?...`                  | Open UPI payment app       |
-
----
-
-## How It Works
-
-<p align="center">
-  <img src="assets/workflow.svg" alt="Secure QR Code Generator Workflow" width="100%">
-</p>
-
-The workflow is simple:
-
-```text
-User selects QR type
-        ↓
-User enters required data
-        ↓
-Input validation is applied
-        ↓
-Unsafe payloads are blocked
-        ↓
-Payload preview is shown
-        ↓
-QR code is generated
-        ↓
-PNG file is saved inside output/
-```
-
----
-
-## Security First Design
-
-<p align="center">
-  <img src="assets/security.svg" alt="Security First Design" width="100%">
-</p>
-
-A QR code does **not** execute code by itself. A QR code only stores text.
-
-The real risk starts when a QR scanner interprets the text as:
-
-* A URL
-* A phone action
-* An SMS action
-* A payment request
-* An app intent
-* A local file reference
-* A dangerous URI scheme
-
-This tool reduces that risk by using strict validation before generating the QR code.
-
----
-
-## Security Features
-
-### Dangerous URI Scheme Blocking
-
-The tool blocks risky URI schemes such as:
-
-```text
-javascript:
-data:
-file:
-vbscript:
-intent:
-market:
-shell:
-cmd:
-powershell:
-ms-excel:
-ms-word:
-ms-powerpoint:
-```
-
-### HTTPS-Only URL Mode
-
-Allowed:
-
-```text
-https://example.com
-```
-
-Rejected:
-
-```text
-http://example.com
-ftp://example.com
-file:///etc/passwd
-javascript:alert(1)
-```
-
-### Internal Address Blocking
-
-The URL validator blocks:
-
-```text
-localhost
-127.0.0.1
-192.168.x.x
-10.x.x.x
-172.16.x.x
-link-local addresses
-reserved addresses
-unspecified addresses
-```
-
-### Input Validation
-
-The tool validates:
-
-* URLs
-* Phone numbers
-* Email addresses
-* WhatsApp numbers
-* Wi-Fi SSIDs
-* Wi-Fi passwords
-* UPI IDs
-* Output filenames
-* QR colors
-* Payload length
-
----
-
-## Project Structure
-
-```text
-Secure-QR-Code-Generator/
-├── assets/
-│   ├── banner.svg
-│   ├── workflow.svg
-│   └── security.svg
-├── output/
-│   └── .gitkeep
-├── secure_qr_generator.py
-├── requirements.txt
-├── install.sh
-├── run.sh
-├── install.bat
-├── run.bat
-├── README.md
-└── .gitignore
-```
-
----
+- Plain-text mode rejects URI/action payloads unless explicitly overridden.
+- HTTPS URLs are canonicalized and checked for credentials, malformed ports, invalid DNS labels, private literal IPs, Unicode controls, and current private DNS answers.
+- Wi-Fi passwords use hidden interactive input and redacted previews.
+- Existing files are not overwritten without `--overwrite`.
+- Secret and financial images receive restrictive Unix file permissions.
+- Foreground/background contrast and quiet-zone requirements are enforced.
+- PNG output is decoded after rendering by default.
+- Decoder mode never opens the decoded destination.
 
 ## Installation
 
-### Windows
-
-Open **Command Prompt**, **PowerShell**, or **Git Bash** inside the project folder.
-
-Run:
-
-```bat
-install.bat
-```
-
-Start the tool:
-
-```bat
-run.bat
-```
-
-Run a self-test:
-
-```bat
-run.bat --self-test
-```
-
-Generate a phone QR:
-
-```bat
-run.bat --type phone --phone 9638478733 --filename phone_qr --yes
-```
-
----
-
-### Kali Linux / Linux
-
-Clone the repository:
-
 ```bash
-git clone https://github.com/D3v4nshPat3l/Secure-QR-Code-Generator.git
-cd Secure-QR-Code-Generator
-```
-
-Install dependencies:
-
-```bash
-bash install.sh
-```
-
-Start the tool:
-
-```bash
-./run.sh
-```
-
-Run a self-test:
-
-```bash
-./run.sh --self-test
-```
-
-Generate a phone QR:
-
-```bash
-./run.sh --type phone --phone 9638478733 --filename phone_qr --yes
-```
-
----
-
-## Manual Installation
-
-### Windows Manual Setup
-
-```bat
 python -m venv venv
-venv\Scripts\activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python secure_qr_generator.py --self-test
-```
-
-### Linux Manual Setup
-
-```bash
-python3 -m venv venv
+# Linux/macOS
 source venv/bin/activate
+# Windows
+# venv\Scripts\activate
+
 python -m pip install --upgrade pip
-pip install -r requirements.txt
-python secure_qr_generator.py --self-test
+python -m pip install -e .
 ```
 
----
+For a reproducible runtime install, use `python -m pip install -r requirements.lock`.
 
-## Interactive Mode
+The installed command is `secure-qr`. The existing `secure_qr_generator.py` entry point and legacy `--type` syntax remain supported.
 
-Run:
+## Generate examples
 
 ```bash
-python secure_qr_generator.py
+secure-qr generate --type url --url example.com --filename example --yes
+secure-qr generate --type text --text "Hello" --yes
+secure-qr generate --type upi --upi-id person@bank --name "Receiver" --amount 100 --yes
 ```
 
-Menu:
-
-```text
-=================================
- Secure QR Code Generator
- Windows / Linux / Kali Compatible
-=================================
-
-1. Safe Text QR
-2. HTTPS URL QR
-3. Phone Call QR
-4. SMS QR
-5. Email QR
-6. WhatsApp QR
-7. Wi-Fi QR
-8. Contact / vCard QR
-9. UPI Payment QR
-```
-
-Select an option, enter the required input, review the payload preview, and confirm QR generation.
-
----
-
-## CLI Usage Examples
-
-### Safe Text QR
+### Wi-Fi without exposing the password in shell history
 
 ```bash
-python secure_qr_generator.py --type text --text "Hello Cyber World" --filename text_qr --yes
+secure-qr generate --type wifi --ssid Office --security WPA --yes
 ```
 
-### HTTPS URL QR
+The tool prompts with hidden input. Automation can use standard input or a protected file:
 
 ```bash
-python secure_qr_generator.py --type url --url github.com --filename github_qr --yes
+printf '%s\n' 'correct-password' | secure-qr generate --type wifi --ssid Office --yes
+secure-qr generate --type wifi --ssid Office --password-file ./wifi.secret --yes
 ```
 
-### Phone Call QR
+## Decode and analyze safely
 
 ```bash
-python secure_qr_generator.py --type phone --phone 9638478733 --filename phone_qr --yes
+secure-qr decode output/example.png
 ```
 
-Generated payload:
+The command prints the payload, classification, risk level, and findings. It does not launch a browser or application.
 
-```text
-tel:9638478733
-```
-
-### SMS QR
+## Signed QR envelopes
 
 ```bash
-python secure_qr_generator.py --type sms --phone 9638478733 --message "Hello from QR" --filename sms_qr --yes
+secure-qr keygen --private-key issuer-private.pem --public-key issuer-public.pem
+secure-qr sign 'https://example.com' --private-key issuer-private.pem --issuer example.org
+secure-qr verify 'SQRS1:...' --public-key issuer-public.pem
 ```
 
-### Email QR
+Do not commit private keys.
+
+## Encrypted QR envelopes
 
 ```bash
-python secure_qr_generator.py --type email --email test@example.com --subject "Hello" --body "This is a test email from QR" --filename email_qr --yes
+secure-qr encrypt 'confidential payload'
+secure-qr decrypt 'SQRE1:...'
 ```
 
-### WhatsApp QR
+Project envelopes require this project's verifier/decrypter; standard scanner apps display them as text.
+
+## Batch mode
+
+CSV columns for the initial batch schemas include `type`, `filename`, and the fields required by `text`, `url`, or `wifi`.
 
 ```bash
-python secure_qr_generator.py --type whatsapp --phone 919638478733 --message "Hello from QR" --filename whatsapp_qr --yes
+secure-qr batch examples.csv --dry-run
+secure-qr batch examples.csv --output-dir output --report batch-report.json
 ```
 
-### Wi-Fi QR
+Batch mode caps input at 1,000 rows, detects duplicate filenames, validates every record, and returns per-row errors.
+
+## Output controls
 
 ```bash
-python secure_qr_generator.py --type wifi --ssid "MyWiFi" --password "password123" --security WPA --hidden no --filename wifi_qr --yes
+secure-qr generate --type text --text Hello \
+  --output-dir output --filename hello --format png \
+  --error-correction H --fill-color black --back-color white --yes
 ```
 
-### UPI QR
+Use `--overwrite` only when replacement is intentional. Use `--no-verify` only when OpenCV is unavailable or verification is intentionally disabled.
+
+## Development
 
 ```bash
-python secure_qr_generator.py --type upi --upi-id username@upi --name "Receiver Name" --amount 100 --filename upi_qr --yes
+python -m pip install -e ".[dev]"
+pytest --cov=secure_qr
+ruff check .
 ```
 
----
+CI tests Python 3.10 and 3.12 on Linux, Windows, and macOS. Separate workflows run dependency auditing, CodeQL, and release builds for Python distributions and a Windows executable.
 
-## Output
+## Documentation
 
-Generated QR codes are saved inside:
+- [Threat model](docs/threat-model.md)
+- [Payload and envelope formats](docs/payload-formats.md)
+- [Security reporting](SECURITY.md)
+- [Contributing](CONTRIBUTING.md)
 
-```text
-output/
-```
+## License
 
-Example:
-
-```text
-output/phone_qr.png
-```
-
-Generated PNG files are ignored by Git using `.gitignore`, so your repository stays clean.
-
----
-
-## Example Output Flow
-
-```text
-Input:
-9638478733
-
-Payload:
-tel:9638478733
-
-Output:
-output/phone_qr.png
-```
-
----
-
-## Requirements
-
-```text
-Python 3
-qrcode[pil]
-pillow
-```
-
-Install dependencies manually:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Common Errors and Fixes
-
-### Python is not recognized on Windows
-
-Install Python from the official Python website and enable:
-
-```text
-Add python.exe to PATH
-```
-
-Then close and reopen the terminal.
-
-### Virtual environment not found
-
-Run the installer first:
-
-```bat
-install.bat
-```
-
-On Linux:
-
-```bash
-bash install.sh
-```
-
-### qrcode module not found
-
-Activate the virtual environment and reinstall dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-### GitHub SVG image not showing
-
-Check that SVG files are not empty:
-
-```bash
-ls -lh assets
-```
-
-Each SVG file should have a real file size. If any file shows `0`, replace it with the correct SVG file and push again.
-
----
-
-## Roadmap
-
-* GUI version
-* QR decoder
-* Batch QR generation from CSV
-* Custom logo support
-* QR preview mode
-* Automated tests
-* Packaged Windows executable
-* Better theme customization
-* Export history logging
-
----
-
-## GitHub Topics
-
-Recommended repository topics:
-
-```text
-python
-qrcode
-cybersecurity
-input-validation
-kali-linux
-windows
-linux
-security-tools
-upi
-wifi
-```
-
----
-
-## Disclaimer
-
-This project is built for learning, safe QR generation, and cybersecurity awareness.
-
-No QR generator can guarantee safety in every scanner app or every user environment. This tool reduces risk by validating inputs, blocking dangerous schemes, and allowing only controlled QR payload formats.
-
----
-
-## Author
-
-**Devansh Patel**
-GitHub: [D3v4nshPat3l](https://github.com/D3v4nshPat3l)
-
----
+MIT
